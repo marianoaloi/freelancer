@@ -1,0 +1,40 @@
+<ng-container *ngIf="(projects |async ) as prjs ;else other_content">
+    <div *ngFor="let prj of prjs" class="divCard">
+        <mat-card *ngIf="!prj.ignore && prj.status.toLowerCase() != 'closed'" class="projectCard">
+            <mat-card-header>
+                <mat-card-title>{{prj.id}}-{{prj.preview_description}}</mat-card-title>
+                <mat-card-subtitle>{{prj.currency.code}}
+                    <span
+                        title='{{prj.budget.minimum|currency:prj.currency.code:"symbol"}}-{{prj.budget.maximum|currency:prj.currency.code:"symbol"}}({{prj.bid_stats.bid_avg|currency:prj.currency.code:"symbol"}}/{{prj.bid_stats.bid_count}})'>
+                        {{realCurrency(prj.budget.minimum,prj.currency.code)|currency:'BRL'}}-{{realCurrency(prj.budget.maximum,prj.currency.code)|currency:'BRL'}}({{realCurrency(prj.bid_stats.bid_avg,prj.currency.code)|currency:'BRL'}}/{{prj.bid_stats.bid_count}})
+                    </span>
+                    {{number2date(prj.time_updated)}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                {{prj.description||prj.preview_description}}
+                <div *ngIf="prj.bids">
+                    <!-- <div *ngFor="let b of prj.bids"><span>{{b.amount|currency:prj.currency.code:"symbol"}}
+                            period:{{b.period|number:'2.0-0'}}</span></div> -->
+
+                    <!--see examples/bubble.html for random bubbles source code-->
+                    <div style="display: block;" *bubbleChart="prj;bubble as b">
+                        <canvas baseChart [datasets]="b.bubbleChartData" [options]="b.bubbleChartOptions"
+                            [legend]="b.bubbleChartLegend" [type]="'bubble'">
+                        </canvas>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="accent" (click)="open(prj)">Open</button>
+                <button mat-raised-button color="accent" (click)="refresh(prj)">Refresh</button>
+                <button mat-raised-button color="affraid" (click)="refresh(prj)">unfllow</button>
+            </mat-card-actions>
+        </mat-card>
+
+    </div>
+</ng-container>
+
+<ng-template #other_content>
+    <h1>WAIT!!!!</h1>
+    <h2>I doing my best!!!</h2>
+</ng-template>

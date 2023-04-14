@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: freelancer-ssd-volume
+  namespace: freelancer-ns
+  labels:
+    type: local
+spec:
+  storageClassName: freelancer-ssd
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/freelancer"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: freelancer-claim
+  namespace: freelancer-ns
+spec:
+  storageClassName: freelancer-ssd
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freelancer
+  namespace: freelancer-ns
+  labels:
+    app: freelancer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freelancer
+  template:
+    metadata:
+      labels:
+        app: freelancer
+    spec:
+      volumes:
+        - name: freelancer-storage
+          persistentVolumeClaim:
+            claimName: freelancer-claim
+      containers:
+        - name: freelancer
+          image: localhost:5000/freelancer
+          envFrom:
+            - secretRef:
+                name: mongo-external-secret
+          # command: ["npm"]
+          # args: ["run", "kube"]
+          # command: ["/bin/bash", "-c", "--"]
+          # args: ["while true; do sleep 30; done;"]
+          resources: {}
+          #command:
+          #  - "npm -v"
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30201
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 30201
+            periodSeconds: 120
+          volumeMounts:
+            - name: freelancer-storage
+              mountPath: /app
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: freelancer-services
+  namespace: freelancer-ns
+  labels:
+    app: freelancer
+spec:
+  ports:
+    - protocol: TCP
+      port: 30201
+      targetPort: 30201
+      nodePort: 30201
+  selector:
+    app: freelancer
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}

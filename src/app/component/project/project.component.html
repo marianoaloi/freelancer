@@ -1,0 +1,45 @@
+<!-- <details *ngIf="projectDetail" [projectDetail]="projectDetail" (closeDetailResource)="closeDetailResource()"></details> -->
+<detail *ngIf="projectDetail" [prj]="projectDetail" (closeDetailResource)="closeDetailResource()"></detail>
+<div>
+    <mat-checkbox>Older to young</mat-checkbox>
+</div>
+<ng-container *ngIf="(projects |async ) as prjs ;else other_content">
+    <div *ngFor="let prj of prjs" class="divCard">
+        <mat-card *ngIf="!prj.ignore" class="projectCard" [ngClass]="{followed: prj.follow}">
+            <mat-card-header>
+                <mat-card-title><span (click)="details(prj)">{{prj.title}}<span
+                            *ngIf="prj.urgent">😍</span></span></mat-card-title>
+                <!-- <mat-card-subtitle>{{prj.preview_description}}</mat-card-subtitle> -->
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+
+                    💲{{prj.currency.code}}
+                    <span
+                        title='{{prj.budget.minimum|currency:prj.currency.code:"symbol"}}-{{prj.budget.maximum|currency:prj.currency.code:"symbol"}}({{prj.bid_stats.bid_avg|currency:prj.currency.code:"symbol"}}/{{prj.bid_stats.bid_count}})'>
+                        <b>{{realCurrency(prj.budget.minimum,prj.currency.code)|currency:'BRL'}}-{{realCurrency(prj.budget.maximum,prj.currency.code)|currency:'BRL'}}</b>({{realCurrency(prj.bid_stats.bid_avg,prj.currency.code)|currency:'BRL'}}/{{prj.bid_stats.bid_count}})
+                    </span>
+                    {{number2date(prj.time_updated)}}
+                </p>
+                <table>
+                    <tr>
+                        <td>Jobs</td>
+                        <td>{{jobs(prj)}}</td>
+                    </tr>
+                </table>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="accent" title="open" (click)="open(prj)">Open</button>
+                <button mat-raised-button color="primary" title="ignore" (click)="ignore(prj)">⛔</button>
+                <button mat-raised-button color="primary" title="follow" (click)="follow(prj)">⤴️</button>
+                <button mat-raised-button color="primary" title="bid" (click)="bid(prj)">🤑</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+</ng-container>
+
+<ng-template #other_content>
+    <h1>WAIT!!!!</h1>
+    <h2>I doing my best!!!</h2>
+</ng-template>

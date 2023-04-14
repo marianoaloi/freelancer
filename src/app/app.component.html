@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+  <div className="titlediv">
+    <a class="title" href="/">{{title }}</a>
+  </div>
+
+  <div class="toolbar-spacer"></div>
+  <a mat-button [routerLink]="['proj']">Project</a>
+  <a mat-button [routerLink]="['follow']">Follow</a>
+
+
+</mat-toolbar>
+<router-outlet></router-outlet>

@@ -1,0 +1,14 @@
+<mat-card *ngIf="!prj.ignore" class="projectCard">
+    <mat-card-header>
+        <mat-card-title>{{prj.preview_description}}</mat-card-title>
+        <mat-card-subtitle>{{prj.currency.code}}
+            {{prj.budget.minimum|currency:prj.currency.code:"symbol"}}-{{prj.budget.maximum|currency:prj.currency.code:"symbol"}}({{prj.bid_stats.bid_avg|currency:prj.currency.code:"symbol"}}/{{prj.bid_stats.bid_count}})</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        {{prj.description}}
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="accent" (click)="open(prj)">Open</button>
+        <button mat-raised-button color="accent" (click)="close()">Close</button>
+    </mat-card-actions>
+</mat-card>
