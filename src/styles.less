@@ -1,4 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+app-follow,
+app-project {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+  align-content: space-around;
+
+}
+
+.divCard {
+  max-width: 350px;
+  display: block;
+  float: left;
+
+  margin-bottom: 5px;
+}
+
+.projectCard.inutil {
+  background-color: #ffdddd;
+}

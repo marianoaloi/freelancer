@@ -24,10 +24,17 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { NgChartsModule } from 'ng2-charts';
 import { BidComponent } from './component/bid/bid.component';
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
+
+import { CookieService } from 'ngx-cookie-service';
+
+const config: SocketIoConfig = { url: environment.websocket, options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,9 +73,16 @@ import { BidComponent } from './component/bid/bid.component';
     MatToolbarModule,
     MatListModule,
     MatDialogModule,
+    MatSidenavModule,
+
+
+    ReactiveFormsModule,
+
+
+    SocketIoModule.forRoot(config),
 
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

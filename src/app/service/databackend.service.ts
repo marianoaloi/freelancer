@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { Project } from '../entity/Project';
 import { Bid } from '../entity/Bid';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,11 @@ export class DatabackendService {
   constructor(private httpClient: HttpClient) { }
 
 
-  getProjs(): Observable<Project[]> {
-    return this.httpClient.get<Project[]>(this.SERVER_URL_PROJECT_API + `/get`)
+  getProjs(jobnameregex: FormGroup): Observable<readonly Project[]> {
+    let jobname;
+    if (jobnameregex)
+      jobname = jobnameregex.value;
+    return this.httpClient.post<Project[]>(this.SERVER_URL_PROJECT_API + `/get`, jobname)
       .pipe(
         retry(2),
         catchError(this.handleError))

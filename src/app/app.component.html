@@ -7,6 +7,62 @@
   <a mat-button [routerLink]="['proj']">Project</a>
   <a mat-button [routerLink]="['follow']">Follow</a>
 
+  <button mat-icon-button (click)="menu" aria-label="Filter Menu" (click)="closeOptions()">
+    <mat-icon>more_vert</mat-icon>
+  </button>
 
 </mat-toolbar>
-<router-outlet></router-outlet>
+
+<mat-drawer-container>
+
+
+  <mat-drawer mode="side" opened class="filter" *ngIf="filtervisible">
+    <div #menu>
+      <form [formGroup]="filters" (ngSubmit)="search()">
+        <ul>
+          <li><mat-checkbox>Older to young</mat-checkbox></li>
+          <li><mat-form-field>
+              <mat-label for="jobname">jobname</mat-label>
+              <input formControlName="jobnameregex" #jobnameregex placeholder="Job Regex" matInput>
+            </mat-form-field></li>
+          <li><mat-form-field>
+              <mat-label for="jobname">title</mat-label>
+              <input formControlName="titleregex" #titleregex placeholder="Title Regex" matInput>
+            </mat-form-field></li>
+
+          <li><mat-form-field>
+              <mat-label for="jobname">Minimum dolar Value</mat-label>
+              <input formControlName="minimum" #Minimum placeholder="Minimum dolar Value" matInput>
+            </mat-form-field></li>
+
+          <li><mat-form-field>
+              <mat-label for="jobname">Maximum dolar Value</mat-label>
+              <input formControlName="maximum" #maximum placeholder="Maximum dolar Value" matInput>
+            </mat-form-field></li>
+
+          <li><button mat-icon-button color="primary" (click)="search()">🔍</button></li>
+
+        </ul>
+
+
+
+      </form>
+    </div>
+    <div class="best">
+      <span (click)="callBest(item._id)" *ngFor="let item of getBest()   | async">{{item._id}}</span>
+    </div>
+    _ <div class="best">
+      <span (click)="callBest(item._id)" *ngFor="let item of getBestFollow()   | async">{{item._id}}</span>
+    </div>
+    _ <div class="best">
+      <span (click)="callBest(item._id)" *ngFor="let item of getBestMoney()   | async"><span>
+          {{item._id}}({{item.count}})</span></span>
+    </div>
+    _
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+
+
+</mat-drawer-container>

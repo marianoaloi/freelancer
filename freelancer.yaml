@@ -73,7 +73,7 @@ spec:
             periodSeconds: 120
           volumeMounts:
             - name: freelancer-storage
-              mountPath: /app
+              mountPath: /usr/share/nginx/html
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

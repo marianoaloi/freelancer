@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+cd $SCRIPT_DIR
+
 #ssh kube '/home/maloi/Docker/recent/recent.sh '
 copy(){
         npm run build
@@ -21,7 +26,7 @@ compile(){
 }
 case $1 in
     compile)
-        ssh kube 'kubectl delete -f /data/freelancer/freelancer.yaml'
+        # ssh kube 'kubectl delete -f /data/freelancer/freelancer.yaml'
         ssh kube $'docker images | grep \'freelancer \' | awk \'{print $3}\' | xargs docker rmi -f'
         compile
        # ssh kube 'kubectl rollout restart deployment freelancer -n freelancer-ns'

@@ -1,3 +1,7 @@
+.followed {
+  background: aquamarine;
+}
+
 detail {
   float: left;
   position: fixed;
@@ -8,16 +12,30 @@ detail {
   border: 3px solid green;
   padding: 10px;
   z-index: 99;
-  left: 10px;
-}
-
-.divCard {
-  width: 33%;
-  display: block;
-  float: left;
+  left: 230px;
 }
 
 
-.followed {
-  background: aquamarine;
+@media only screen and (max-width: 796px) {
+
+  /* For mobile phones: */
+  .divCard {
+    width: 100%;
+    // display: block;
+    // float: left;
+  }
+
+  detail {
+    float: left;
+    position: fixed;
+    top: 58px;
+    background: #00aaff;
+    margin: auto;
+    width: 100%;
+    border: 3px solid #35219b;
+    padding: 4px;
+    z-index: 99;
+    left: 0px;
+    max-height: 90%;
+  }
 }

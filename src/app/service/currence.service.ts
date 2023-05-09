@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { catchError, map, mergeMap, retry, shareReplay, throwError } from 'rxjs';
+import { Observable, catchError, map, mergeMap, retry, shareReplay, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,12 +12,11 @@ export class CurrenceService {
   private SERVER_URL_UTIL_API = `${environment.backendServer}/util`;
   constructor(private httpClient: HttpClient) { }
 
-  currencyBC: any = undefined;
-  getCurrencyBC() {
 
-    if (this.currencyBC)
-      return this.currencyBC
-    this.currencyBC = this.httpClient.get(`https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?%40dataInicial='${moment().add(-1, 'week').format('MM-DD-YYYY')}'&%40dataFinalCotacao='${moment().format('MM-DD-YYYY')}'&%24format=json&%24orderby=dataHoraCotacao%20desc`)
+  getCurrencyBC(): Observable<any[]> {
+
+
+    return this.httpClient.get(`https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?%40dataInicial='${moment().add(-1, 'week').format('MM-DD-YYYY')}'&%40dataFinalCotacao='${moment().format('MM-DD-YYYY')}'&%24format=json&%24orderby=dataHoraCotacao%20desc`)
       .pipe(
         shareReplay(1, 1000 * 60 * 60 * 6),
         retry(2),
@@ -25,13 +24,11 @@ export class CurrenceService {
         map((bc: any) => bc.value[0].cotacaoCompra),
       )
 
-    return this.currencyBC;
   }
-  currencyFree: any = undefined;
-  getCurrencyFree() {
-    if (this.currencyFree)
-      return this.currencyFree
-    this.currencyFree = this.httpClient.get(`${this.SERVER_URL_UTIL_API}/get`)
+
+  getCurrencyFree(): Observable<any[]> {
+
+    return this.httpClient.get(`${this.SERVER_URL_UTIL_API}/get`)
       .pipe(
         shareReplay(1, 1000 * 60 * 60 * 6),
         retry(2),
@@ -49,15 +46,46 @@ export class CurrenceService {
       )
 
 
-    return this.currencyFree;
   }
 
-  /*
-  x.map((c: any) => {
-            c['real'] = c.exchange_rate * parseFloat(realdolar.cotacaoCompra)
-            return c
-          })
-  */
+
+  getbestJob(): Observable<any[]> {
+
+
+    return this.httpClient.get<any[]>(`${this.SERVER_URL_UTIL_API}/biggerjobs`)
+      .pipe(
+        shareReplay(1, 1000 * 60 * 60 * 6),
+        retry(2),
+        catchError(this.handleError),
+
+      )
+  }
+
+
+  getbestFollowed(): Observable<any[]> {
+
+
+    return this.httpClient.get<any[]>(`${this.SERVER_URL_UTIL_API}/biggerjobs?modify=follow`)
+      .pipe(
+        shareReplay(1, 1000 * 60 * 60 * 6),
+        retry(2),
+        catchError(this.handleError),
+
+      )
+  }
+
+
+  getbestPrice(): Observable<any[]> {
+
+
+    return this.httpClient.get<any[]>(`${this.SERVER_URL_UTIL_API}/bymoney?clean=true`)
+      .pipe(
+        shareReplay(1, 1000 * 60 * 60 * 6),
+        retry(2),
+        catchError(this.handleError),
+
+      )
+  }
 
   // Manipulação de erros
   handleError(error: HttpErrorResponse) {

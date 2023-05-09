@@ -1,9 +1,11 @@
 <ng-container *ngIf="(projects |async ) as prjs ;else other_content">
     <div *ngFor="let prj of prjs" class="divCard">
-        <mat-card *ngIf="!prj.ignore && prj.status.toLowerCase() != 'closed'" class="projectCard">
+        <mat-card [ngClass]="{inutil:prj.status!='active'}" *ngIf="!prj.ignore && prj.status.toLowerCase() != 'closed'"
+            class="projectCard">
             <mat-card-header>
                 <mat-card-title>{{prj.id}}-{{prj.preview_description}}</mat-card-title>
-                <mat-card-subtitle>{{prj.currency.code}}
+                <mat-card-subtitle>
+                    <span class="fi fi-{{prj.currency.country | lowercase}}"></span>
                     <span
                         title='{{prj.budget.minimum|currency:prj.currency.code:"symbol"}}-{{prj.budget.maximum|currency:prj.currency.code:"symbol"}}({{prj.bid_stats.bid_avg|currency:prj.currency.code:"symbol"}}/{{prj.bid_stats.bid_count}})'>
                         {{realCurrency(prj.budget.minimum,prj.currency.code)|currency:'BRL'}}-{{realCurrency(prj.budget.maximum,prj.currency.code)|currency:'BRL'}}({{realCurrency(prj.bid_stats.bid_avg,prj.currency.code)|currency:'BRL'}}/{{prj.bid_stats.bid_count}})
@@ -25,9 +27,10 @@
                 </div>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-raised-button color="accent" (click)="open(prj)">Open</button>
-                <button mat-raised-button color="accent" (click)="refresh(prj)">Refresh</button>
-                <button mat-raised-button color="affraid" (click)="refresh(prj)">unfllow</button>
+                <button mat-stroked-button color="primary" (click)="open(prj)">Open</button>
+                <button mat-stroked-button color="primary" (click)="refresh(prj)">Refresh</button>
+                <button mat-stroked-button color="primary" (click)="refresh(prj)">unfllow</button>
+                {{prj._id}}
             </mat-card-actions>
         </mat-card>
 

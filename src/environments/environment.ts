@@ -1,7 +1,8 @@
 export const environment = {
     production: false,
     apiUrl: 'http://192.168.25.90:4200',
-    backendServer: 'http://192.168.25.90:3004/api',
+    backendServer: 'http://192.168.25.90:3009/api',
+    websocket: 'http://192.168.25.90:3009',
 };
 
 
