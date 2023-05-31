@@ -9,6 +9,11 @@
             <mat-card-header>
                 <mat-card-title><span (click)="details(prj)">{{prj.title}} </span></mat-card-title>
                 <!-- <mat-card-subtitle>{{prj.preview_description}}</mat-card-subtitle> -->
+                <div class="mobilevisible">
+                    <button title="open" (click)="open(prj)">📂</button>
+                    <button title="ignore" (click)="ignore(prj)">⛔</button>
+                    <button title="follow" (click)="follow(prj)">⤴️</button>
+                </div>
             </mat-card-header>
             <mat-card-content>
                 <p>
@@ -18,21 +23,21 @@
                         title='{{prj.budget.minimum|currency:prj.currency.code:"symbol"}}-{{prj.budget.maximum|currency:prj.currency.code:"symbol"}}({{prj.bid_stats.bid_avg|currency:prj.currency.code:"symbol"}}/{{prj.bid_stats.bid_count}})'>
                         <b>{{realCurrency(prj.budget.minimum,prj.currency.code)|currency:'BRL'}}-{{realCurrency(prj.budget.maximum,prj.currency.code)|currency:'BRL'}}</b>({{realCurrency(prj.bid_stats.bid_avg,prj.currency.code)|currency:'BRL'}}/{{prj.bid_stats.bid_count}})
                     </span>
-                    {{number2date(prj.time_updated)}}
+                    <span class="mobilehidden">
+                        {{number2date(prj.time_updated)}}
+                    </span>
                 </p>
-                <table>
-                    <tr>
-                        <td>Jobs</td>
-                        <td>{{jobs(prj)}}</td>
-                    </tr>
-                </table>
+                <div class="jobsTable mobilehidden">
+                    <b>Jobs</b>
+                    <span>{{jobs(prj)}}</span>
+                </div>
             </mat-card-content>
-            <mat-card-actions>
+            <mat-card-actions class="mobilehidden">
                 <button mat-stroked-button color="primary" title="open" (click)="open(prj)">📂</button>
                 <button mat-stroked-button color="primary" title="ignore" (click)="ignore(prj)">⛔</button>
                 <button mat-stroked-button color="primary" title="follow" (click)="follow(prj)">⤴️</button>
                 <button mat-stroked-button color="primary" title="bid" (click)="bid(prj)">🤑</button>
-                {{prj._id}}<span *ngIf="prj.urgent">😍</span>
+                <span class="mobilehidden">{{prj._id}}</span><span *ngIf="prj.urgent">😍</span>
             </mat-card-actions>
         </mat-card>
     </div>

@@ -77,6 +77,7 @@ export class AppComponent implements OnInit {
 
     });
     this.filter.setFilter(this.filters)
+    this.filtervisible = false
   }
 
 

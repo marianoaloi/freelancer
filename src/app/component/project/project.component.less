@@ -15,6 +15,18 @@ detail {
   left: 230px;
 }
 
+.jobsTable>b {
+  padding-right: 2px;
+}
+
+.jobsTable>span {
+  background: #d7eef1;
+  padding: 2px;
+}
+
+.mobilevisible {
+  display: none;
+}
 
 @media only screen and (max-width: 796px) {
 
@@ -23,6 +35,23 @@ detail {
     width: 100%;
     // display: block;
     // float: left;
+  }
+
+  .jobsTable {
+    display: none;
+  }
+
+  .mobilehidden {
+    display: none;
+  }
+
+  .mobilevisible {
+    display: contents;
+  }
+
+  .mat-mdc-card-title {
+    font-size: 14px;
+    /* font-weight: 100; */
   }
 
   detail {
