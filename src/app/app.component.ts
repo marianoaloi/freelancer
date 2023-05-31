@@ -70,10 +70,11 @@ export class AppComponent implements OnInit {
       let el = element[1]
       if (!element || !el)
         return
-      let val = el.value
+      let val = el.value?.trim()
       if (val)
         this.cookieService.set(element[0], val);
-      // element[1].setValue(this.cookieService.get(element[0]))
+      else
+        this.cookieService.delete(element[0])      // element[1].setValue(this.cookieService.get(element[0]))
 
     });
     this.filter.setFilter(this.filters)
