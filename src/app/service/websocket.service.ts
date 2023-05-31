@@ -7,7 +7,6 @@ import { Project } from '../entity/Project';
 })
 export class WebsocketService {
 
-  newprojects = this.socket.fromEvent<Project[]>('newprojects')
   alterProject = this.socket.fromEvent<Project>('alterProject')
 
   constructor(private socket: Socket) { }

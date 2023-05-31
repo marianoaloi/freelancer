@@ -2,44 +2,49 @@
 <detail class="detail" *ngIf="projectDetail" [prj]="projectDetail" (closeDetailResource)="closeDetailResource()">
 </detail>
 
-<ng-container *ngIf="(projects |async ) as prjs ;else other_content">
-    <div *ngFor="let prj of prjs" class="divCard">
-        <mat-card [ngClass]="{inutil:prj.status!='active'}" *ngIf="!prj.ignore" class="projectCard"
-            [ngClass]="{followed: prj.follow}">
-            <mat-card-header>
-                <mat-card-title><span (click)="details(prj)">{{prj.title}} </span></mat-card-title>
-                <!-- <mat-card-subtitle>{{prj.preview_description}}</mat-card-subtitle> -->
-                <div class="mobilevisible">
-                    <button title="open" (click)="open(prj)">📂</button>
-                    <button title="ignore" (click)="ignore(prj)">⛔</button>
-                    <button title="follow" (click)="follow(prj)">⤴️</button>
-                </div>
-            </mat-card-header>
-            <mat-card-content>
-                <p>
-                    <span class="fi fi-{{prj.currency.country | lowercase}}"></span>
+<ng-container *ngIf="projects && projects.length > 0;else other_content">
+    <div *ngFor="let oprj of projects" class="divCard">
+        <!-- {{oprj|async|json}} -->
+        <div *ngIf=" oprj | async as prj ;">
 
-                    <span
-                        title='{{prj.budget.minimum|currency:prj.currency.code:"symbol"}}-{{prj.budget.maximum|currency:prj.currency.code:"symbol"}}({{prj.bid_stats.bid_avg|currency:prj.currency.code:"symbol"}}/{{prj.bid_stats.bid_count}})'>
-                        <b>{{realCurrency(prj.budget.minimum,prj.currency.code)|currency:'BRL'}}-{{realCurrency(prj.budget.maximum,prj.currency.code)|currency:'BRL'}}</b>({{realCurrency(prj.bid_stats.bid_avg,prj.currency.code)|currency:'BRL'}}/{{prj.bid_stats.bid_count}})
-                    </span>
-                    <span class="mobilehidden">
-                        {{number2date(prj.time_updated)}}
-                    </span>
-                </p>
-                <div class="jobsTable mobilehidden">
-                    <b>Jobs</b>
-                    <span>{{jobs(prj)}}</span>
-                </div>
-            </mat-card-content>
-            <mat-card-actions class="mobilehidden">
-                <button mat-stroked-button color="primary" title="open" (click)="open(prj)">📂</button>
-                <button mat-stroked-button color="primary" title="ignore" (click)="ignore(prj)">⛔</button>
-                <button mat-stroked-button color="primary" title="follow" (click)="follow(prj)">⤴️</button>
-                <button mat-stroked-button color="primary" title="bid" (click)="bid(prj)">🤑</button>
-                <span class="mobilehidden">{{prj._id}}</span><span *ngIf="prj.urgent">😍</span>
-            </mat-card-actions>
-        </mat-card>
+            <mat-card [ngClass]="{inutil:prj.status!='active'}" *ngIf="!prj.ignore" class="projectCard"
+                [ngClass]="{followed: prj.follow}">
+                <mat-card-header>
+                    <mat-card-title><span (click)="details(prj)">{{prj.title}} </span></mat-card-title>
+                    <!-- <mat-card-subtitle>{{prj.preview_description}}</mat-card-subtitle> -->
+                    <div class="mobilevisible">
+                        <button title="open" (click)="open(prj)">📂</button>
+                        <button title="ignore" (click)="ignore(prj)">⛔</button>
+                        <button title="follow" (click)="follow(prj)">⤴️</button>
+                    </div>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        <span class="fi fi-{{prj.currency.country | lowercase}}"></span>
+
+                        <span
+                            title='{{prj.budget.minimum|currency:prj.currency.code:"symbol"}}-{{prj.budget.maximum|currency:prj.currency.code:"symbol"}}({{prj.bid_stats.bid_avg|currency:prj.currency.code:"symbol"}}/{{prj.bid_stats.bid_count}})'>
+                            <b>{{realCurrency(prj.budget.minimum,prj.currency.code)|currency:'BRL'}}-{{realCurrency(prj.budget.maximum,prj.currency.code)|currency:'BRL'}}</b>({{realCurrency(prj.bid_stats.bid_avg,prj.currency.code)|currency:'BRL'}}/{{prj.bid_stats.bid_count}})
+                        </span>
+                        <span class="mobilehidden">
+                            {{number2date(prj.time_updated)}}
+                        </span>
+                    </p>
+                    <div class="jobsTable mobilehidden">
+                        <b>Jobs</b>
+                        <span>{{jobs(prj)}}</span>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions class="mobilehidden">
+                    <button mat-stroked-button color="primary" title="open" (click)="open(prj)">📂</button>
+                    <button mat-stroked-button color="primary" title="ignore" (click)="ignore(prj)">⛔</button>
+                    <button mat-stroked-button color="primary" title="follow" (click)="follow(prj)">⤴️</button>
+                    <button mat-stroked-button color="primary" title="bid" (click)="bid(prj)">🤑</button>
+                    <span class="mobilehidden">{{prj._id}}</span><span *ngIf="prj.urgent">😍</span>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
     </div>
 
 </ng-container>
