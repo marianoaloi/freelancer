@@ -41,8 +41,8 @@ export interface Project {
     project_reject_reason: ProjectRejectReason
     hourly_project_info?: HourlyProjectInfo
     enterprise_metadata_values?: any[]
-    ignore: Date
-    follow: Date
+    ignore?: Date
+    follow?: Date
 }
 
 export interface Currency {

@@ -23,7 +23,9 @@ export class AppComponent implements OnInit {
     jobnameregex: [""],
     titleregex: [""],
     minimum: [""],
-    maximum: [""]
+    maximum: [""],
+    showFollow: [""],
+    showIgnore: [""]
   })
   bestJob: Observable<any[]>;
   bestFollow: Observable<any[]>;
@@ -31,20 +33,10 @@ export class AppComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private filter: filterService, private util: CurrenceService,
     private cookieService: CookieService) {
-    // this.util.getbestJob().subscribe(val => this.bestJob = val.map(x => x._id).join(" + "))
-    // this.util.getbestFollowed().subscribe(val => this.bestFollow = val.map(x => x._id).join(" + "))
-
-
-
-
-
 
     this.bestJob = this.util.getbestJob();
     this.bestFollow = this.util.getbestFollowed();
     this.bestMoney = this.util.getbestPrice();
-
-
-
 
   }
   ngOnInit(): void {
@@ -70,7 +62,7 @@ export class AppComponent implements OnInit {
       let el = element[1]
       if (!element || !el)
         return
-      let val = el.value?.trim()
+      let val = typeof (el.value) == 'boolean' ? el.value : el.value?.trim()
       if (val)
         this.cookieService.set(element[0], val);
       else

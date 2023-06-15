@@ -9,6 +9,13 @@
 
             <mat-card [ngClass]="{inutil:prj.status!='active'}" *ngIf="!prj.ignore" class="projectCard"
                 [ngClass]="{followed: prj.follow}">
+                <mat-card-actions class="mobilehidden">
+                    <button mat-stroked-button color="primary" title="open" (click)="open(prj)">📂</button>
+                    <button mat-stroked-button color="primary" title="ignore" (click)="ignore(prj)">⛔</button>
+                    <button mat-stroked-button color="primary" title="follow" (click)="follow(prj)">⤴️</button>
+                    <button mat-stroked-button color="primary" title="bid" (click)="bid(prj)">🤑</button>
+                    <span class="mobilehidden">{{prj._id}}</span><span *ngIf="prj.urgent">😍</span>
+                </mat-card-actions>
                 <mat-card-header>
                     <mat-card-title><span (click)="details(prj)">{{prj.title}} </span></mat-card-title>
                     <!-- <mat-card-subtitle>{{prj.preview_description}}</mat-card-subtitle> -->
@@ -35,13 +42,6 @@
                         <span>{{jobs(prj)}}</span>
                     </div>
                 </mat-card-content>
-                <mat-card-actions class="mobilehidden">
-                    <button mat-stroked-button color="primary" title="open" (click)="open(prj)">📂</button>
-                    <button mat-stroked-button color="primary" title="ignore" (click)="ignore(prj)">⛔</button>
-                    <button mat-stroked-button color="primary" title="follow" (click)="follow(prj)">⤴️</button>
-                    <button mat-stroked-button color="primary" title="bid" (click)="bid(prj)">🤑</button>
-                    <span class="mobilehidden">{{prj._id}}</span><span *ngIf="prj.urgent">😍</span>
-                </mat-card-actions>
             </mat-card>
         </div>
 

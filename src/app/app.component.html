@@ -19,8 +19,15 @@
   <mat-drawer mode="side" opened class="filter" *ngIf="filtervisible">
     <div #menu>
       <form [formGroup]="filters" (ngSubmit)="search()">
+        <mat-checkbox (change)="search()" formControlName="showFollow" value="showFollow" #showFollow
+          type="checkbox">Show
+          Follow</mat-checkbox>
+        <mat-checkbox (change)="search()" formControlName="showIgnore" value="showIgnore" #showIgnore
+          type="checkbox">Show
+          Ignore</mat-checkbox>
         <ul>
-          <li><mat-checkbox>Older to young</mat-checkbox></li>
+          <li>
+          </li>
           <li><mat-form-field>
               <mat-label for="jobname">jobname</mat-label>
               <input formControlName="jobnameregex" #jobnameregex placeholder="Job Regex" matInput>
@@ -40,7 +47,8 @@
               <input formControlName="maximum" #maximum placeholder="Maximum dolar Value" matInput>
             </mat-form-field></li>
 
-          <li><button mat-icon-button color="primary" (click)="search()">🔍</button></li>
+          <li><button mat-icon-button color="primary" (click)="search()">🔍</button>
+          </li>
 
         </ul>
 

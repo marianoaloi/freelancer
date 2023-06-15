@@ -74,11 +74,25 @@ export class ProjectComponent implements OnInit, OnDestroy {
       )
     })
 
+
+    if (doc.ignore) {
+      console.log(this.mapProjects.size);
+
+      this.mapProjects.delete(id)
+      if (this.mapProjects.size < 5) {
+        this.callNewProjects()
+      }
+    }
+
   }
   insert(doc: any) {
 
     let valFilter = this.filters.get('jobnameregex')?.value.toLowerCase()
     let odoc = doc
+    if (this.mapProjects.has(doc.id)) {
+      this.update(doc, doc.id);
+      return
+    }
     if (valFilter) {
       let sameFitler = odoc.jobs.filter((x: any) => x).map((x: { name: string; }) => x.name.toLowerCase()).find((x: string) => x.includes(valFilter))
       if (sameFitler && sameFitler.length > 0) {
@@ -103,6 +117,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   search() {
+    this.mapProjects = new Map()
+    this.projects = []
     this.getProjs()
   }
 
@@ -123,23 +139,23 @@ export class ProjectComponent implements OnInit, OnDestroy {
     })
   }
   ignore(prj: Project) {
+    if (prj.ignore)
+      delete prj.ignore;
+    else
+      prj.ignore = new Date()
     this.backend.ignore(prj)
-    // this.projects = this.projects.pipe(
-    //   map(prjs => prjs.filter(pr => pr._id != prj._id))
-    // )
-    prj.ignore = new Date()
 
-    this.mapProjects.delete(prj.id)
-    if (this.mapProjects.size < 5) {
-      this.callNewProjects()
-    }
+
   }
 
 
   follow(prj: Project) {
 
+    if (prj.follow)
+      delete prj.follow;
+    else
+      prj.follow = new Date()
     this.backend.follow(prj)
-    prj.follow = new Date()
   }
 
 
