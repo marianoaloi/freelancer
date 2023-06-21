@@ -5,6 +5,7 @@
     {
       "type": "npm",
       "script": "start",
+      "label": "startAngular",
       "isBackground": true,
       "problemMatcher": {
         "owner": "typescript",

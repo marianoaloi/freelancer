@@ -31,6 +31,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   mapProjects = new Map<number, Observable<Project>>();
   loading: boolean = true;
 
+
   constructor(private filter: filterService, private backend: DatabackendService, private currency: CurrenceService, private ws: WebsocketService,
     private cookieService: CookieService
   ) {
@@ -162,6 +163,24 @@ export class ProjectComponent implements OnInit, OnDestroy {
   open(prj: Project) {
     openGlobal(prj)
   }
+
+  closeAll: Function = () => {
+    const ids: Project[] = []
+    this.projects.map((p) => {
+      p.subscribe(
+        ip => {
+          if (!ip.follow) {
+            // this.ignore(ip)
+            ids.push({ _id: ip._id } as Project)
+          }
+
+        }
+      )
+    })
+      .filter(x => x)
+
+    this.backend.ignoreAll(ids)
+  };
 
 
   bid(prj: Project) {

@@ -46,6 +46,10 @@ case $1 in
     batch)
        ssh kube "ID=$(docker ps |grep freelancers |awk '{print $1}') && echo 'Found Container ID: ${ID}' &&docker exec -ti $ID  /bin/bash"
     ;;
+
+    geral)
+        /opt/maloi/node/frelancer_server/deploy.sh copy && /opt/maloi/angular/freelancer/deploy.sh copy
+    ;;
     *)
         printf "Use: \n \t copy\n \t compile\n \t restart\n \t batch\n\n"
         ;;

@@ -35,6 +35,19 @@ export class DatabackendService {
     return result.subscribe();
 
   }
+
+
+  ignoreAll(prj: Project[]): any {
+    let result = this.httpClient.put(`${this.SERVER_URL_PROJECT_API}/ignore`, prj)
+      .pipe(
+        retry(2),
+        catchError(this.handleError))
+
+    return result.subscribe();
+
+  }
+
+
   follow(prj: Project): any {
     let result = this.httpClient.put(`${this.SERVER_URL_PROJECT_API}/follow`, prj)
       .pipe(
