@@ -1,4 +1,7 @@
 <mat-toolbar color="primary">
+  <button mat-icon-button (click)="menu" aria-label="Filter Menu" (click)="closeOptions()">
+    <mat-icon>more_vert</mat-icon>
+  </button>
   <div className="titlediv">
     <a class="title" href="/">{{title }}</a>
   </div>
@@ -7,9 +10,7 @@
   <a mat-button [routerLink]="['proj']">Project</a>
   <a mat-button [routerLink]="['follow']">Follow</a>
 
-  <button mat-icon-button (click)="menu" aria-label="Filter Menu" (click)="closeOptions()">
-    <mat-icon>more_vert</mat-icon>
-  </button>
+
 
 </mat-toolbar>
 

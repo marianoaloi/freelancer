@@ -13,7 +13,7 @@ const routes: Routes = [
     component: FollowComponent
   },
 
-  { path: '', redirectTo: '/proj', pathMatch: 'full' },
+  { path: '', redirectTo: 'proj', pathMatch: 'full' },
 ];
 
 @NgModule({

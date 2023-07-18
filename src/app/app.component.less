@@ -7,8 +7,20 @@
   font-weight: 600;
   font-size: large;
   padding: 4px 6px;
-  color: #000000 !important;
   text-decoration: none;
+
+  color: white;
+  text-decoration: none;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  paint-order: stroke;
+  text-shadow: 1px 0 0 rgb(110, 109, 109),
+    /*right */
+    0 1px 0 rgb(110, 109, 109),
+    /*top */
+    -1px 0 0 rgb(110, 109, 109),
+    /*left */
+    0 -1px 0 rgb(110, 109, 109);
 }
 
 .title::after {

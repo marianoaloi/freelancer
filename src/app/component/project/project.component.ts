@@ -64,7 +64,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   }
   remove(id: number) {
-    this.update({ ignore: new Date }, id)
+    // this.update({ ignore: new Date }, id)
+    const odoc = this.mapProjects.get(id);
+    if (odoc) {
+
+      let index = this.projects.indexOf(odoc)
+      this.projects.splice(index, 1)
+    }
   }
   update(doc: any, id: number) {
 
@@ -124,7 +130,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   getProjs() {
-    this.loading = true;
     this.projects = []
 
     this.callNewProjects()
@@ -132,11 +137,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   }
   callNewProjects() {
+    this.loading = true;
     this.backend.getProjs(this.filters).subscribe(doclist => {
       let temp = doclist.slice(0, 20000)
       // temp.sort(function (a, b) { return a.time_updated - b.time_updated });
       temp.reverse();
       temp.forEach(doc => this.insert(doc))
+
+      this.loading = false;
     })
   }
   ignore(prj: Project) {
@@ -180,6 +188,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
       .filter(x => x)
 
     this.backend.ignoreAll(ids)
+    this.projects = []
   };
 
 
