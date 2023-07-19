@@ -36,6 +36,10 @@ export class DatabackendService {
 
   }
 
+  bid(bid: Bid): any {
+
+  }
+
 
   ignoreAll(prj: Project[]): any {
     let result = this.httpClient.put(`${this.SERVER_URL_PROJECT_API}/ignore`, prj)

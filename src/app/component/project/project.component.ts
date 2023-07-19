@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subject, Subscription, map, merge, scan, switchMap } from 'rxjs';
 import { Project } from 'src/app/entity/Project';
 import { DatabackendService } from 'src/app/service/databackend.service';
@@ -9,6 +9,8 @@ import { FormGroup } from '@angular/forms';
 import { filterService } from 'src/app/service/filterService';
 import { WebsocketService } from 'src/app/service/websocket.service';
 import { CookieService } from 'ngx-cookie-service';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { BidComponent } from '../bid/bid.component';
 
 @Component({
   selector: 'app-project',
@@ -17,7 +19,6 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class ProjectComponent implements OnInit, OnDestroy {
 
-  projectDetail: any;
   currencyObj: any;
 
   // @ViewChild("jobnameregex") jobnameregex: any;
@@ -33,7 +34,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
 
   constructor(private filter: filterService, private backend: DatabackendService, private currency: CurrenceService, private ws: WebsocketService,
-    private cookieService: CookieService
+    private cookieService: CookieService, public dialog: MatDialog
   ) {
     this.currency.getCurrencyFree()
       .subscribe((x: any) => this.currencyObj = x);
@@ -193,14 +194,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
 
   bid(prj: Project) {
-    throw new Error('Method not implemented.');
+    const dialogRef = this.dialog.open(BidComponent, { data: prj })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   details(prj: Project) {
-    this.projectDetail = prj
-  }
-  closeDetailResource() {
-    this.projectDetail = undefined
+    const dialogRef = this.dialog.open(ProjDetail, { data: prj })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The detail was closed');
+    });
+
   }
 
 
@@ -232,10 +237,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
 })
 export class ProjDetail implements OnInit {
 
-  @Input() prj!: Project
+  prj!: Project
   @Output("closeDetailResource") closeDetailResource: EventEmitter<any> = new EventEmitter();
   jsonResource: any;
-  constructor() {
+  constructor(
+
+    public dialogRef: MatDialogRef<ProjDetail>,
+    @Inject(MAT_DIALOG_DATA) public data: Project,
+
+  ) {
+    this.prj = data;
   }
 
   ngOnInit(): void {
@@ -243,7 +254,7 @@ export class ProjDetail implements OnInit {
   }
 
   close() {
-    this.closeDetailResource.emit();
+    this.dialogRef.close();
   }
 
   open(prj: Project) {

@@ -1,7 +1,3 @@
-<!-- <details *ngIf="projectDetail" [projectDetail]="projectDetail" (closeDetailResource)="closeDetailResource()"></details> -->
-<detail class="detail" *ngIf="projectDetail" [prj]="projectDetail" (closeDetailResource)="closeDetailResource()">
-</detail>
-
 <ng-container *ngIf="!loading;else other_content">
     <div *ngIf="projects && projects.length == 0">
         <h1>There isnt more data</h1>
