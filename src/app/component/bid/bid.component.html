@@ -1,69 +1,75 @@
 <mat-card>
     <mat-card-header>
         <h1 *ngIf="prj">{{prj.title}}</h1>
-
+        <span
+            title='{{prj.budget.minimum|currency:prj.currency.code:"symbol"}}-{{prj.budget.maximum|currency:prj.currency.code:"symbol"}}({{prj.bid_stats.bid_avg|currency:prj.currency.code:"symbol"}}/{{prj.bid_stats.bid_count}})'>
+            <b>{{realCurrency(prj.budget.minimum,prj.currency.code)|currency:'BRL'}}-{{realCurrency(prj.budget.maximum,prj.currency.code)|currency:'BRL'}}</b>
+            ({{realCurrency(prj.bid_stats.bid_avg,prj.currency.code)|currency:'BRL'}}/{{prj.bid_stats.bid_count}})
+        </span>
     </mat-card-header>
-    <mat-card-actions>
-        <button mat-raised-button color="accent" (click)="open(prj)">Open</button>
-        <button mat-raised-button color="accent" (click)="close()">Close</button>
-    </mat-card-actions>
     <mat-card-content>
+        <div class="description">{{prj.description}}</div>
+
         <form [formGroup]="bidForm" *ngIf="prj" class="bidForm" (ngSubmit)="onFormSubmit()">
+            <div class="bidField">
+                <mat-form-field class="textFieldForm">
 
 
-            <mat-form-field class="textFieldForm">
+                    <mat-label for="period">period</mat-label>
+                    <input placeholder="period" matInput formControlName="period">
+                    <mat-error *ngIf="bidForm.get('period')?.hasError('required')" class="error">
+                        Your period required. </mat-error>
+                </mat-form-field>
 
 
-                <mat-label for="period">period</mat-label>
-                <input placeholder="period" matInput formControlName="period">
-                <mat-error *ngIf="bidForm.get('period')?.hasError('required')" class="error">
-                    Your period required. </mat-error>
-            </mat-form-field>
+                <mat-form-field class="textFieldForm">
+
+
+                    <mat-label for="milestone_percentage">Milestone Percentage</mat-label>
+                    <input placeholder="milestone_percentage" matInput formControlName="milestone_percentage">
+                    <mat-error *ngIf="bidForm.get('milestone_percentage')?.hasError('required')" class="error">
+                        Your Milestone Percentage required. </mat-error>
+                </mat-form-field>
+            </div>
+
+
+
+
+
             <!-- <mat-form-field class="textFieldForm"> -->
 
 
-            <mat-label for="amount">amount</mat-label>
+            <mat-label for="amount" class="amount">amount<div>
+
+                    <span class="fi fi-{{'BR' | lowercase}}"></span>
+                    <span>{{realCurrency(bidForm.get('amount')?.value,prj.currency.code)|currency:'BRL'}}</span>
+                    <span class="fi fi-{{prj.currency.country | lowercase}}"></span>
+                    <span>{{bidForm.get('amount')?.value}}</span>
+                </div></mat-label>
             <mat-slider [max]="(prj.budget.maximum || 100) +1" [min]="prj.budget.minimum">
                 <input placeholder="amount" matInput formControlName="amount" #slider matSliderThumb>
             </mat-slider>
             <mat-error *ngIf="bidForm.get('amount')?.hasError('required')" class="error">
                 Your amount required. </mat-error>
-            <!-- </mat-form-field> -->
-            <div>
 
-                <span
-                    title='{{prj.budget.minimum|currency:prj.currency.code:"symbol"}}-{{prj.budget.maximum|currency:prj.currency.code:"symbol"}}({{prj.bid_stats.bid_avg|currency:prj.currency.code:"symbol"}}/{{prj.bid_stats.bid_count}})'>
-                    <b>{{realCurrency(prj.budget.minimum,prj.currency.code)|currency:'BRL'}}-{{realCurrency(prj.budget.maximum,prj.currency.code)|currency:'BRL'}}</b>({{realCurrency(prj.bid_stats.bid_avg,prj.currency.code)|currency:'BRL'}}/{{prj.bid_stats.bid_count}})
-                </span>
-            </div>
-            <div>
 
-                <span class="fi fi-{{'BR' | lowercase}}"></span>
-                <span>{{realCurrency(bidForm.get('amount')?.value,prj.currency.code)|currency:'BRL'}}</span>
-                <span class="fi fi-{{prj.currency.country | lowercase}}"></span>
-                <span>{{bidForm.get('amount')?.value}}</span>
-            </div>
-            <mat-form-field class="textFieldForm">
+            <mat-form-field class="textFieldForm" class="descriptionBid">
 
 
                 <mat-label for="description">description</mat-label>
-                <textarea placeholder="description" matInput formControlName="description">
+                <textarea class="descriptionBid" placeholder="description" matInput formControlName="description">
             </textarea>
 
                 <mat-error *ngIf="bidForm.get('description')?.hasError('required')" class="error">
                     Your description required. </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="textFieldForm">
-
-
-                <mat-label for="milestone_percentage">Milestone Percentage</mat-label>
-                <input placeholder="milestone_percentage" matInput formControlName="milestone_percentage">
-                <mat-error *ngIf="bidForm.get('milestone_percentage')?.hasError('required')" class="error">
-                    Your Milestone Percentage required. </mat-error>
-            </mat-form-field>
-
-            <button (ngSubmit)="onFormSubmit()">SUBMIT</button>
         </form>
     </mat-card-content>
+
+    <mat-card-actions>
+        <button mat-raised-button color="accent" (click)="open(prj)">Open</button>
+        <button mat-raised-button color="accent" (click)="close()">Close</button>
+        <button mat-raised-button color="accent" (ngSubmit)="onFormSubmit()">SUBMIT</button>
+    </mat-card-actions>
 </mat-card>

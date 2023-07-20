@@ -7,12 +7,50 @@ form.bidForm {
   padding: 10px;
 }
 
-[formcontrolname="description"] {
-  height: 20vh;
-  width: 100%;
+.amount {
+  display: inline-flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  align-content: flex-start;
 
+}
+
+
+.descriptionBid {
+  max-height: 20vh;
+  width: 100%;
+  overflow: scroll
 }
 
 h1 {
   max-width: 40vh;
+}
+
+.description {
+  white-space: pre-line;
+  max-height: 20vh;
+  overflow: scroll
+}
+
+.bidField {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.mat-mdc-card-header {
+  display: flex;
+  padding: 16px 16px 0;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.mdc-card__actions {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

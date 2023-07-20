@@ -101,25 +101,64 @@ button.closeAll:disabled {
   bottom: 5px;
 }
 
-@media only screen and (max-width: 796px) {
+
+.titleProject {
+  height: 6vh;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.infoPrj {
+  display: grid;
+  justify-content: end;
+  justify-items: end;
+  font-size: 10px;
+}
+
+.currentInfo {
+  overflow: hidden;
+  white-space: nowrap;
+  /* Don't forget this one */
+  text-overflow: ellipsis;
+}
+
+.jobsTable {
+  height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 3px 0px;
+}
+
+@media only screen and (max-width: 500px) {
+
+  .titleProject {
+    max-height: 3vh;
+    width: calc(100% - 134px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* background: aqua; */
+    display: flow;
+  }
 
   /* For mobile phones: */
   .divCard {
     width: 100%;
+    max-width: unset;
     // display: block;
     // float: left;
   }
 
-  .jobsTable {
-    display: none;
-  }
 
   .mobilehidden {
     display: none;
   }
 
   .mobilevisible {
-    display: contents;
+    // display: contents;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
   }
 
   .mat-mdc-card-title {
@@ -140,4 +179,12 @@ button.closeAll:disabled {
     left: 0px;
     max-height: 90%;
   }
+
+  .mat-mdc-card-header {
+    display: flex;
+    padding: 16px 16px 0;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
 }

@@ -131,7 +131,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   getProjs() {
-    this.projects = []
 
     this.callNewProjects()
 
@@ -139,6 +138,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
   callNewProjects() {
     this.loading = true;
+    this.projects = []
     this.backend.getProjs(this.filters).subscribe(doclist => {
       let temp = doclist.slice(0, 20000)
       // temp.sort(function (a, b) { return a.time_updated - b.time_updated });

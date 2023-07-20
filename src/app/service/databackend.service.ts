@@ -37,7 +37,12 @@ export class DatabackendService {
   }
 
   bid(bid: Bid): any {
+    let result = this.httpClient.post(`${this.SERVER_URL_PROJECT_API}/sendBid`, bid)
+      .pipe(
+        retry(2),
+        catchError(this.handleError))
 
+    return result.subscribe();
   }
 
 
