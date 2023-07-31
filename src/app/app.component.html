@@ -19,13 +19,12 @@
 
   <mat-drawer mode="side" opened class="filter" *ngIf="filtervisible">
     <div #menu>
-      <form [formGroup]="filters" (ngSubmit)="search()">
-        <mat-checkbox (change)="search()" formControlName="showFollow" value="showFollow" #showFollow
-          type="checkbox">Show
+      <form class="formFilter" [formGroup]="filters" (ngSubmit)="search()">
+        <mat-checkbox formControlName="showFollow" value="showFollow" #showFollow type="checkbox">Show
           Follow</mat-checkbox>
-        <mat-checkbox (change)="search()" formControlName="showIgnore" value="showIgnore" #showIgnore
-          type="checkbox">Show
+        <mat-checkbox formControlName="showIgnore" value="showIgnore" #showIgnore type="checkbox">Show
           Ignore</mat-checkbox>
+        <mat-checkbox formControlName="urgent" value="urgent" #urgent type="checkbox">urgent</mat-checkbox>
         <ul>
           <li>
           </li>

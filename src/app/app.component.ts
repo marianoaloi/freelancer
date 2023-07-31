@@ -25,7 +25,8 @@ export class AppComponent implements OnInit {
     minimum: [""],
     maximum: [""],
     showFollow: [""],
-    showIgnore: [""]
+    showIgnore: [""],
+    urgent: [""]
   })
   bestJob: Observable<any[]>;
   bestFollow: Observable<any[]>;

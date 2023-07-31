@@ -3,6 +3,7 @@ export const environment = {
     apiUrl: 'http://localhost:4200',
     backendServer: '/api',
     websocket: '/',
+    bidder_id: 3185482,
 };
 
 

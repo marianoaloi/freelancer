@@ -103,9 +103,16 @@ button.closeAll:disabled {
 
 
 .titleProject {
-  height: 6vh;
+  height: 45px;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
+  background: darkgreen;
+  color: white;
+  font-family: 'Roboto';
+  padding: 3px;
+  font-weight: bold;
+  text-align: justify;
 }
 
 .infoPrj {
@@ -130,7 +137,11 @@ button.closeAll:disabled {
   padding: 3px 0px;
 }
 
-@media only screen and (max-width: 500px) {
+.urgent {
+  background: pink;
+}
+
+@media only screen and (max-width: 720px) {
 
   .titleProject {
     max-height: 3vh;

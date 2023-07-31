@@ -7,19 +7,7 @@
         <div *ngIf=" oprj | async as prj ;">
 
             <mat-card [ngClass]="{inutil:prj.status!='active'}" *ngIf="!prj.ignore" class="projectCard"
-                [ngClass]="{followed: prj.follow}">
-                <mat-card-actions class="mobilehidden">
-                    <button mat-stroked-button color="primary" title="open" (click)="open(prj)">📂</button>
-                    <button mat-stroked-button color="primary" title="ignore" (click)="ignore(prj)">⛔</button>
-                    <button mat-stroked-button color="primary" title="follow" (click)="follow(prj)">⤴️</button>
-                    <button mat-stroked-button color="primary" title="bid" (click)="bid(prj)">🤑</button>
-                    <div class="infoPrj">
-                        <span class="mobilehidden">{{prj._id}}</span><span *ngIf="prj.urgent">😍</span>
-                        <span class="mobilehidden">
-                            {{number2date(prj.time_updated)}}
-                        </span>
-                    </div>
-                </mat-card-actions>
+                [ngClass]="{followed: prj.follow,urgent:prj.urgent}">
                 <mat-card-header>
                     <span class="titleProject" (click)="details(prj)">{{prj.title}} </span>
                     <div class="mobilevisible">
@@ -44,6 +32,18 @@
                         <span>{{jobs(prj)}}</span>
                     </div>
                 </mat-card-content>
+                <mat-card-actions class="mobilehidden">
+                    <button mat-stroked-button color="primary" title="open" (click)="open(prj)">📂</button>
+                    <button mat-stroked-button color="primary" title="ignore" (click)="ignore(prj)">⛔</button>
+                    <button mat-stroked-button color="primary" title="follow" (click)="follow(prj)">⤴️</button>
+                    <button mat-stroked-button color="primary" title="bid" (click)="bid(prj)">🤑</button>
+                    <div class="infoPrj">
+                        <span class="mobilehidden">{{prj._id}}</span>
+                        <span class="mobilehidden">
+                            {{number2date(prj.time_updated)}}
+                        </span>
+                    </div>
+                </mat-card-actions>
             </mat-card>
         </div>
 
